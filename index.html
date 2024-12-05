@@ -1,1 +1,143 @@
-hi!
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FolderToPDF - Streamline Your Script Debugging</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <header id="header" class="header">
+      <div class="title"></div>
+      <nav class="menu">
+        <input type="checkbox" id="menuToggle" class="menu-checkbox" hidden>
+        <label for="menuToggle" class="menu-icon">
+          <svg width="32" height="32" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+            <title>Toggle menu</title>
+            <path class="h1" d="M3 5H21" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path class="h2" d="M3 12H21" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path class="h3" d="M3 19H21" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </label>
+        <ul class="menu-items">
+          <li class="menu-item"><a class="menu-link" href="#overview">{{ t('nav.overview') }}</a></li>
+          <li class="menu-item"><a class="menu-link" href="#features">{{ t('nav.features') }}</a></li>
+          <li class="menu-item"><a class="menu-link" href="#download">{{ t('nav.download') }}</a></li>
+          <li class="menu-item">
+            <div class="language-switch">
+              <select v-model="currentLanguage">
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="ru">Русский</option>
+              </select>
+            </div>
+          </li>
+          <li class="menu-item">
+            <div class="theme-switch">
+              <input type="checkbox" class="checkbox" id="theme-switch" v-model="isDarkMode">
+              <label for="theme-switch" class="label">
+                <svg class="moon" width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                  <title>Switch light/dark mode</title>
+                  <path
+                    d="M3 11.5066C3 16.7497 7.25034 21 12.4934 21c3.7275.0 6.9532-2.1482 8.5066-5.2741C12.4934 15.7259 8.27411 11.5066 8.27411 3 5.14821 4.55344 3 7.77915 3 11.5066z"
+                    stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <svg class="sun" width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                  <title>Switch light/dark mode</title>
+                  <path
+                    d="M12 18c3.3137.0 6-2.6863 6-6 0-3.31371-2.6863-6-6-6-3.31371.0-6 2.68629-6 6 0 3.3137 2.68629 6 6 6z"
+                    stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M22 12h1" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M12 2V1" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M12 23V22" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M20 20l-1-1" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M20 4 19 5" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M4 20l1-1" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M4 4 5 5" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M1 12H2" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <div class="ball"></div>
+              </label>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="home">
+      <section id="overview" class="container">
+        <div class="hero">
+          <h1>{{ t('hero.title') }}</h1>
+          <p class="tagline">{{ t('hero.tagline') }}</p>
+        </div>
+        <div class="overview-content">
+          <div class="overview-description">
+            <h2>{{ t('overview.title') }}</h2><br>
+            <p>{{ t('overview.description') }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="container">
+        <h2>{{ t('features.title') }}</h2><br>
+        <div class="features-grid">
+          <div class="feature-card" v-for="feature in t('features.items')" :key="feature.title">
+            <h3>{{ feature.title }}</h3>
+            <template v-if="Array.isArray(feature.description)">
+              <ul>
+                <li v-for="item in feature.description" :key="item">{{ item }}</li>
+              </ul>
+            </template>
+            <template v-else>
+              <p>{{ feature.description }}</p>
+            </template>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" class="container">
+        <h2>{{ t('howItWorks.title') }}</h2>
+        <div class="workflow-steps">
+          <div class="step" v-for="step in t('howItWorks.steps')" :key="step.stepNumber">
+            <span class="step-number">{{ step.stepNumber }}</span>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.description }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="container">
+        <h2>{{ t('about.title') }}</h2>
+        <p>{{ t('about.description') }}</p>
+        <p class="disclaimer">{{ t('about.disclaimer') }}</p>
+      </section>
+
+      <section id="download" class="container">
+        <h2 class="text-center"><img
+            src="https://github.com/user-attachments/assets/0bea26d1-a875-4a50-beb3-1b2864e4a6bb"
+            style="width:75%; margin: 0 auto; display: block;"></h2><br>
+        <div class="download-options">
+          <div class="download-card" v-for="platform in t('download.platforms')">
+            <h3>{{ platform.name }}</h3>
+            <p>{{ platform.description }}</p>
+            <a :href="platform.link" class="download-button">{{ t('download.downloadButton') }}</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <p>{{ t('footer.copyright') }}</p>
+      <p>{{ t('footer.disclaimer') }}</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

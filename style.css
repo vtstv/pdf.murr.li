@@ -1,0 +1,404 @@
+:root {
+    /* Light Theme Colors */
+    --bg-primary-light: #f4f4f6;
+    --bg-secondary-light: #ffffff;
+    --text-primary-light: #333333;
+    --text-secondary-light: #666666;
+    --accent-color-light: #3b82f6;
+    --accent-hover-light: #2563eb;
+
+    /* Dark Theme Colors */
+    --bg-primary-dark: #121212;
+    --bg-secondary-dark: #1e1e1e;
+    --text-primary-dark: #e0e0e0;
+    --text-secondary-dark: #c0c0c0;
+    --accent-color-dark: #60a5fa;
+    --accent-hover-dark: #3b82f6;
+
+    /* Transitions */
+    --transition-speed: 0.3s;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: none;
+}
+
+/* Add this to the existing style.css */
+.language-switch {
+    margin-right: 1rem;
+}
+
+.language-switch select {
+    background-color: transparent;
+    color: inherit;
+    border: 1px solid var(--accent-color-light);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+html.dark .language-switch select {
+    border-color: var(--accent-color-dark);
+    background-color: var(--bg-secondary-dark);
+    color: var(--text-primary-dark);
+}
+
+.download-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.download-card {
+    flex: 1;
+    background-color: var(--bg-secondary-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    max-width: fit-content;
+    box-sizing: border-box;
+    margin: 0 auto; 
+}
+
+
+
+.download-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color-light);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.download-button:hover {
+    background-color: var(--accent-hover-light);
+}
+
+html.dark .download-card {
+    background-color: var(--bg-secondary-dark);
+}
+
+html.dark .download-button {
+    background-color: var(--accent-color-dark);
+}
+
+html.dark .download-button:hover {
+    background-color: var(--accent-hover-dark);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-primary-light);
+    color: var(--text-primary-light);
+}
+
+/* Dark mode styles */
+html.dark,
+html.dark body {
+    background-color: var(--bg-primary-dark);
+    color: var(--text-primary-dark);
+}
+
+/* Header and Navigation */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: transparent;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.menu-items {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.menu-item {
+    margin-left: 1.5rem;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+}
+
+.menu-link:hover {
+    color: var(--accent-color-light);
+}
+
+html.dark .menu-link:hover {
+    color: var(--accent-color-dark);
+}
+
+/* Responsive Navigation */
+@media screen and (min-width: 768px) {
+    .menu-icon {
+        display: none !important;
+    }
+
+    .menu-checkbox {
+        display: none;
+    }
+
+    .menu-items {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu-icon {
+        display: block;
+    }
+
+    .menu-items {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-primary-light);
+    }
+
+    html.dark .menu-items {
+        background-color: var(--bg-primary-dark);
+    }
+
+    .menu-checkbox:checked ~ .menu-items {
+        display: flex;
+    }
+}
+
+/* Theme Switch Styling */
+
+.theme-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.theme-switch .checkbox {
+    opacity: 0;
+    position: absolute;
+}
+
+.theme-switch .label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 50px;
+    position: relative;
+    height: 40px;
+    width: 80px;
+    cursor: pointer;
+    box-shadow: var(--switch-shadow);
+    transition: var(--transition-speed);
+}
+
+.theme-switch .label:hover .moon {
+    transform: rotate(360deg);
+}
+
+.theme-switch .label:hover .sun {
+    transform: rotate(360deg);
+}
+
+.theme-switch .ball {
+    background-color: var(--text-color);
+    position: absolute;
+    border-radius: 50%;
+    top: 5px;
+    left: 5px;
+    height: 30px;
+    width: 30px;
+    transition: var(--transition-speed);
+}
+
+.theme-switch .moon {
+    color: #f1c40f;
+    transform-origin: center center;
+    transition: all 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+    transform: rotate(0);
+}
+
+.theme-switch .sun {
+    color: #f39c12;
+    transform-origin: center center;
+    transition: all 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+    transform: rotate(0);
+}
+
+.theme-switch .checkbox:checked ~ .label .ball {
+    transform: translateX(40px);
+}
+
+.theme-switch .checkbox:checked ~ .label .moon {
+    color: #f39c12;
+}
+
+.theme-switch .checkbox:checked ~ .label .sun {
+    color: #f1c40f;
+}
+
+html.dark .theme-switch .ball {
+    background-color: var(--text-primary-dark); 
+}
+
+html.light .theme-switch .ball {
+    background-color: var(--text-primary-light); 
+}
+
+/* Main Content */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.tagline {
+    font-size: 1.25rem;
+    color: var(--text-secondary-light);
+}
+
+html.dark .tagline {
+    color: var(--text-secondary-dark);
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background-color: var(--bg-secondary-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+html.dark .feature-card {
+    background-color: var(--bg-secondary-dark);
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.05);
+}
+
+html.dark .feature-card h3 {
+    color: var(--text-primary-dark);
+}
+
+html.dark .feature-card p,
+html.dark .feature-card ul {
+    color: var(--text-secondary-dark);
+}
+
+/* Workflow Steps */
+.workflow-steps {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    background-color: var(--bg-secondary-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+html.dark .step {
+    background-color: var(--bg-secondary-dark);
+}
+
+.step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--accent-color-light);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+html.dark .step-number {
+    background-color: var(--accent-color-dark);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--bg-secondary-light);
+}
+
+html.dark .footer {
+    background-color: var(--bg-secondary-dark);
+    color: var(--text-secondary-dark);
+}
+
+/* Responsive Design */
+
+@media(prefers-color-scheme:dark) {
+	.theme-switch .ball {
+		transform: translatex(40px);
+	}
+
+	.light .theme-switch .ball {
+		transform: translatex(0);
+	}
+}
+
+@media screen and (max-width: 768px) {
+    .workflow-steps {
+        flex-direction: column;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Accessibility and Print Styles */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+}
