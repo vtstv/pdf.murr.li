@@ -28,12 +28,23 @@
           <li class="menu-item"><a class="menu-link" href="#features">{{ t('nav.features') }}</a></li>
           <li class="menu-item"><a class="menu-link" href="#download">{{ t('nav.download') }}</a></li>
           <li class="menu-item">
-            <div class="language-switch">
-              <select v-model="currentLanguage">
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-                <option value="ru">Русский</option>
-              </select>
+            <div class="language-switch" @click="toggleLanguageMenu">
+              <svg class="language-icon" width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                <title>Choose language</title>
+                <path
+                  d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zM2 12h20M12 2c2.828 3.714 4.5 8.286 4.5 10s-1.672 6.286-4.5 10c-2.828-3.714-4.5-8.286-4.5-10s1.672-6.286 4.5-10z"
+                  stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="selected-language">{{ currentLanguage.toUpperCase() }}</span>
+
+              <transition name="fade">
+                <ul v-if="isLanguageMenuOpen" class="language-menu">
+                  <li v-for="lang in ['en', 'de', 'ru']" :key="lang" class="language-option"
+                    @click.stop="setLanguage(lang)">
+                    {{ lang.toUpperCase() }}
+                  </li>
+                </ul>
+              </transition>
             </div>
           </li>
           <li class="menu-item">

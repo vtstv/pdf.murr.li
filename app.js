@@ -1,4 +1,4 @@
-const { createApp, ref, watch } = Vue
+const { createApp, ref, watch, onMounted, onUnmounted } = Vue
 
 createApp({
     setup() {
@@ -306,21 +306,38 @@ createApp({
                 }
             }
 
-            
+
         }
 
 
         const currentLanguage = ref(localStorage.getItem('language') || 'en')
         const isDarkMode = ref(localStorage.getItem('theme') === 'dark')
+        const isLanguageMenuOpen = ref(false)
 
         const t = (key) => {
             const keys = key.split('.')
             return keys.reduce((obj, k) => obj[k], translations[currentLanguage.value])
         }
 
+        const toggleLanguageMenu = () => {
+            isLanguageMenuOpen.value = !isLanguageMenuOpen.value
+        }
+
+        const setLanguage = (lang) => {
+            currentLanguage.value = lang
+            isLanguageMenuOpen.value = false
+        }
+
+        const handleClickOutside = (event) => {
+            const languageSwitch = document.querySelector('.language-switch')
+            if (languageSwitch && !languageSwitch.contains(event.target)) {
+                isLanguageMenuOpen.value = false
+            }
+        }
+
         watch(currentLanguage, (newLang) => {
             document.documentElement.lang = newLang
-            localStorage.setItem('language', newLang)  
+            localStorage.setItem('language', newLang)
         })
 
         watch(isDarkMode, (isDark) => {
@@ -329,10 +346,21 @@ createApp({
             localStorage.setItem('theme', isDark ? 'dark' : 'light')
         })
 
+        onMounted(() => {
+            document.addEventListener('click', handleClickOutside)
+        })
+
+        onUnmounted(() => {
+            document.removeEventListener('click', handleClickOutside)
+        })
+
         return {
             currentLanguage,
             isDarkMode,
-            t
+            isLanguageMenuOpen,
+            t,
+            toggleLanguageMenu,
+            setLanguage
         }
     }
 }).mount('#app')
