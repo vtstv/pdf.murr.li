@@ -27,23 +27,84 @@
     transition: none;
 }
 
-/* Add this to the existing style.css */
 .language-switch {
-    margin-right: 1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+    color: var(--text-primary-light);
 }
 
-.language-switch select {
-    background-color: transparent;
-    color: inherit;
-    border: 1px solid var(--accent-color-light);
-    padding: 0.5rem;
-    border-radius: 4px;
-}
-
-html.dark .language-switch select {
-    border-color: var(--accent-color-dark);
-    background-color: var(--bg-secondary-dark);
+html.dark .language-switch {
     color: var(--text-primary-dark);
+}
+
+.language-icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 1.5;
+    transition: transform 0.3s ease;
+}
+
+.language-switch:hover .language-icon {
+    transform: rotate(15deg);
+}
+
+.selected-language {
+    font-size: 14px;
+}
+
+.language-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 80px;
+    background-color: var(--bg-secondary-light);
+    border: 1px solid var(--accent-color-light);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    margin: 8px 0 0 0;
+    padding: 0;
+    z-index: 10;
+}
+
+html.dark .language-menu {
+    background-color: var(--bg-secondary-dark);
+    border-color: var(--accent-color-dark);
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.language-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-primary-light);
+    transition: background-color 0.2s ease;
+}
+
+html.dark .language-option {
+    color: var(--text-primary-dark);
+}
+
+.language-option:hover {
+    background-color: var(--hover-bg-color, #f0f0f0);
+}
+
+html.dark .language-option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Fade transition for menu */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 
 .download-options {
@@ -60,7 +121,7 @@ html.dark .language-switch select {
     text-align: center;
     max-width: fit-content;
     box-sizing: border-box;
-    margin: 0 auto; 
+    margin: 0 auto;
 }
 
 
@@ -181,7 +242,7 @@ html.dark .menu-link:hover {
         background-color: var(--bg-primary-dark);
     }
 
-    .menu-checkbox:checked ~ .menu-items {
+    .menu-checkbox:checked~.menu-items {
         display: flex;
     }
 }
@@ -247,24 +308,24 @@ html.dark .menu-link:hover {
     transform: rotate(0);
 }
 
-.theme-switch .checkbox:checked ~ .label .ball {
+.theme-switch .checkbox:checked~.label .ball {
     transform: translateX(40px);
 }
 
-.theme-switch .checkbox:checked ~ .label .moon {
+.theme-switch .checkbox:checked~.label .moon {
     color: #f39c12;
 }
 
-.theme-switch .checkbox:checked ~ .label .sun {
+.theme-switch .checkbox:checked~.label .sun {
     color: #f1c40f;
 }
 
 html.dark .theme-switch .ball {
-    background-color: var(--text-primary-dark); 
+    background-color: var(--text-primary-dark);
 }
 
 html.light .theme-switch .ball {
-    background-color: var(--text-primary-light); 
+    background-color: var(--text-primary-light);
 }
 
 /* Main Content */
@@ -372,13 +433,13 @@ html.dark .footer {
 /* Responsive Design */
 
 @media(prefers-color-scheme:dark) {
-	.theme-switch .ball {
-		transform: translatex(40px);
-	}
+    .theme-switch .ball {
+        transform: translatex(40px);
+    }
 
-	.light .theme-switch .ball {
-		transform: translatex(0);
-	}
+    .light .theme-switch .ball {
+        transform: translatex(0);
+    }
 }
 
 @media screen and (max-width: 768px) {
